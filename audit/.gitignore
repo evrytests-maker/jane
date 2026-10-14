@@ -1,0 +1,3 @@
+# Cloned third-party repositories under audit are not committed; only reports are.
+/*/
+!/_reports/
