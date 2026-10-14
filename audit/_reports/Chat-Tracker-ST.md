@@ -40,7 +40,7 @@
 4. **Мост к SunnyMemories** (🟡 инфо) — `index.js:3248-3480, 3660-3985`. Читает `window.extension_settings.SunnyMemories`, `chat[0].extra.sunny_memories`, `character.data.extensions.sunny_memories_*`; программно кликает кнопки SunnyMemories (`nativeButton.click()`, :3827) и записывает текст из своего textarea в его поля с событиями `input/change/blur` (:3459-3467). Это правка чужого расширения, но она явная, пользовательская (по кнопкам в мини-окне) и описана в README. Данные остаются в DOM/памяти, наружу не уходят. Вывод библиотеки сделан безопасно через `textContent` (:3844-3873).
 5. **`innerHTML`** — используется только для статических шаблонов и локальных строк `trackerText(...)` и чисел (:2466, 2741, 2764, 2954, 3082, 3894). Данные из чата в `innerHTML` не вставляются. Хотя ключи `title`/`aria-label` берутся из словаря расширения.
 6. **Сборка отпечатка**: `localStorage` используется только для ключей `chatTrackerLanguage`, `chatTrackerCustomization`, `chatTrackerTokenMode`, `chatTrackerMaxTokens`, `chatTracker_settings`, `chatTracker_apiUsage_*`. Чтений чужих ключей, `cookie`, `navigator.userAgent`, IP — нет.
-7. **Метаданные.** `manifest.json`: `homePage` указывает на `SillyTavern/Extension-ChatTracker`, а не на настоящий репозиторий (SunKatz05/Chat-Tracker-ST). Также `LICENSE` — 1065 байт, ASCII (стандартная короткая лицензия, содержимое просмотрено). Расхождений между README и кодом нет, кроме того, что README про «интеграцию с SunnyMemories» (код её действительно содержит).
+7. **Метаданные.** `manifest.json`: `homePage` указывает на `SillyTavern/Extension-ChatTracker`, а не на настоящий репозиторий (SunKatz05/Chat-Tracker-ST). Также `LICENSE` — 1065 байт, ASCII (MIT, стандартный текст). Расхождений между README и кодом нет, кроме того, что README про «интеграцию с SunnyMemories» (код её действительно содержит).
 
 ## Что проверено и не найдено
 - Все сетевые API (fetch с собственными URL, XHR, sendBeacon, WebSocket, EventSource, Image, `$.ajax/$.post`, динамический `import`, `<script>/<iframe>`, `createElement('script')`) — нет.
@@ -48,7 +48,7 @@
 - `eval`, `new Function`, строковые `setTimeout/setInterval`, `atob`, `btoa`, `fromCharCode`, длинные base64/hex-строки, `.wasm`, минифицированные файлы: нет. Файл `index.js` (170 КБ, 4080 строк) не минифицирован; строки длиннее 300 символов — это шаблоны разметки с i18n.
 - Кейлоггинг: `keydown` вешается только на `document` для закрытия своих окон по Escape (:2582) и на свой input (:3129).
 - Правка настроек ST, подмена endpoint, запись в `config.yaml`, установка других расширений — нет. `package.json`, `plugins/` и серверной части нет.
-- Отложенные триггеры (дата, счётчик запусков, пользователь) — нет. Единственные таймеры: `setInterval(refreshAll, 2500)` (:671) и рефреш мини-окна (:3500).
+- Отложенные триггеры (дата, счётчик запусков, пользователь) — нет. Единственные таймеры: `setInterval(refreshAll, 2500)` (:684) и рефреш мини-окна (:3515).
 - Текст, обращённый к ИИ: не найден.
 - История git: 66 коммитов, один автор. Ни в одном коммите нет удалённого вредоносного кода: `git log --all -S` по `fetch(`, `http`, `eval(`, `atob`, `secret`, `XMLHttpRequest`, `sendBeacon`, `WebSocket`, `api_key`, `getRequestHeaders`, `Function(`, `document.cookie` — по коду пусто (`http` встречается только в README). Первый коммит с обёрткой `window.fetch` — `926381b` (11.01.2026); большой рефакторинг (3311 добавлений) — `b007d83` (31.07.2026), он также просмотрен через итоговый файл. Файлов, которые были удалены в истории, нет. Ветка `main` одна, тегов нет.
 
